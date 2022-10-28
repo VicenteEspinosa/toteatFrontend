@@ -23,6 +23,7 @@
   cursor: pointer;
 }
 
-.center {
-  
+.subtitle {
+  font-size: 20px;
+  font-weight: bold;
 }

@@ -20,7 +20,7 @@ class WorkerStats extends Component {
     this.state = {
       quantityTab: true,
       filter: NaN,
-      filterOptions: ["Mesero", "Cajero", "Categoria", "Zona"],
+      filterOptions: ["Cajero", "Categoria", "Mesero", "Zona"],
       data: {},
     };
   }
@@ -79,6 +79,12 @@ class WorkerStats extends Component {
         <div className={"title"}>
           <h1>Estadisticas Cantidad</h1>
         </div>
+        <div className="description">
+          <p>
+            En esta sección se muestran las cantidad de mesas o dinero,
+            organizado por un filtro seleccionado.
+          </p>
+        </div>
         <div className={style.filter}>
           <Dropdown
             options={filterOptions}
@@ -92,23 +98,23 @@ class WorkerStats extends Component {
         </div>
 
         <Paper>
-            <Chart data={filter ? data[filter] : []}>
-              <ArgumentAxis />
-              <ValueAxis max={7} />
+          <Chart data={filter ? data[filter] : []}>
+            <ArgumentAxis />
+            <ValueAxis max={7} />
 
-              <BarSeries
-                color={quantityTab ? "#3f51b5" : "#12bb48"}
-                valueField={quantityTab ? "quantity" : "income"}
-                argumentField="name"
-              />
-              <Title
-                text={
-                  quantityTab ? "Cantidad de mesas" : "Valor total de las mesas"
-                }
-              />
-              <EventTracker />
-              <Tooltip />
-            </Chart>
+            <BarSeries
+              color={quantityTab ? "#3f51b5" : "#12bb48"}
+              valueField={quantityTab ? "quantity" : "income"}
+              argumentField="name"
+            />
+            <Title
+              text={
+                quantityTab ? "Cantidad de mesas" : "Valor total de las mesas"
+              }
+            />
+            <EventTracker />
+            <Tooltip />
+          </Chart>
         </Paper>
       </div>
     );
