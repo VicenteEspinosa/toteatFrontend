@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { addDotsToNumber } from "../../utils";
-import Plot from "react-plotly.js";
+import Paper from '@mui/material/Paper';
+import {
+  Chart,
+  BarSeries,
+  Title,
+  ArgumentAxis,
+  ValueAxis,
+} from '@devexpress/dx-react-chart-material-ui';
+import { Animation } from '@devexpress/dx-react-chart';
 
 class WaiterStats extends Component {
   constructor() {
@@ -15,7 +23,7 @@ class WaiterStats extends Component {
   componentDidMount() {
     fetch(`${process.env.REACT_APP_BASE_URL}/sells_per_waiter`)
       .then((response) => response.json())
-      .then((waiters) => this.setState({ waiters: waiters }));
+      .then((waiters) => this.setState({ waiters: Object.keys(waiters).map((waiter) => ({name: waiter, quantity: waiters[waiter]["quantity"], income: waiters[waiter]["income"]})) }));
   }
 
   switchTab = () => {
@@ -36,29 +44,21 @@ class WaiterStats extends Component {
           </div>
         ))}
         <button onClick={this.switchTab}>Switch</button>
-        <Plot
-          data={[
-            {
-              marker: { color: "red" },
-            },
-            {
-              type: "bar",
-              x: Object.keys(waiters),
-              y: Object.keys(waiters).map((waiter) =>
-                this.state.quantityTab
-                  ? waiters[waiter]["quantity"]
-                  : waiters[waiter]["income"]
-              ),
-            },
-          ]}
-          layout={{
-            width: 650,
-            height: 480,
-            title: this.state.quantityTab
-              ? "Cantidad de mesas atendidas"
-              : "Valor de las mesas atendidas",
-          }}
-        />
+        <Paper>
+        <Chart
+          data={waiters}
+        >
+          <ArgumentAxis />
+          <ValueAxis max={7} />
+
+          <BarSeries
+            valueField={this.state.quantityTab ? "quantity" : "income"}
+            argumentField="name"
+          />
+          <Title text={this.state.quantityTab ? "Cantidad de mesas" : "Valor total mesas"} />
+          <Animation />
+        </Chart>
+      </Paper>
       </div>
     );
   }
