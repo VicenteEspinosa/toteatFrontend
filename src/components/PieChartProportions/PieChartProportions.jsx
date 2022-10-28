@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Chart,
   PieSeries,
-  Title,
   Legend,
 } from "@devexpress/dx-react-chart-bootstrap4";
 import "@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css";

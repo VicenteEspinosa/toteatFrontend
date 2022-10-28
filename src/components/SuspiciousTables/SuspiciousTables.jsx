@@ -18,27 +18,6 @@ const columns = [
 
 ];
 
-const rows = [
-  {
-    cashier: "Cajero 1",
-    waiter: "Mesero 1",
-    zone: "Zona 1",
-    missing_money: 1000,
-  },
-  {
-    cashier: "Cajero 1",
-    waiter: "Mesero 1",
-    zone: "Zona 2",
-    missing_money: 2000,
-  },
-  {
-    cashier: "Cajero 1",
-    waiter: "Mesero 2",
-    zone: "Zona 1",
-    missing_money: 3000,
-  },
-];
-
 class SuspiciousTables extends Component {
   constructor(props) {
     super(props);
