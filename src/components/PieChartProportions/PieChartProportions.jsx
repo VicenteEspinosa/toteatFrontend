@@ -58,16 +58,12 @@ class PieChartProportions extends Component {
         <button className={style.button} onClick={this.switchFilter}>
           {filter === "quantity" ? "Ver por dinero" : "Ver por cantidad"}
         </button>
+        <div className={style.subtitle}>
+          {this.props.zone +
+            `(${filter === "quantity" ? "Cantidad" : "Dinero"})`}
+        </div>
         <Chart data={chartData.length === 0 ? [] : chartData[this.props.zone]}>
           <PieSeries valueField={filter} argumentField="name" />
-          <div className={style.center}>
-            <Title
-              text={
-                this.props.zone +
-                `(${filter === "quantity" ? "Cantidad" : "Dinero"})`
-              }
-            />
-          </div>
           <div className={style.legend}>
             {this.props.legend ? <Legend position={"bottom"} /> : null}
           </div>
