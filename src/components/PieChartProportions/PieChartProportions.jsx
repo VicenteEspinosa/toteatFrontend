@@ -56,7 +56,7 @@ class PieChartProportions extends Component {
     return (
       <div className={style.card}>
         <button className={style.button} onClick={this.switchFilter}>
-          {filter === "quantity" ? "Ver por dinero" : "Ver por cantidad"}
+          {filter === "quantity" ? "Comparar por dinero" : "Comparar por cantidad"}
         </button>
         <div className={style.subtitle}>
           {this.props.zone +
