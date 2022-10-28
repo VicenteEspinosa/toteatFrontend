@@ -6,10 +6,12 @@ import {
   Title,
   ArgumentAxis,
   ValueAxis,
+  Tooltip,
 } from "@devexpress/dx-react-chart-material-ui";
-// import { Animation } from "@devexpress/dx-react-chart";
+import { EventTracker } from "@devexpress/dx-react-chart";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import style from "./WorkerStats.module.css";
 
 class WorkerStats extends Component {
   constructor() {
@@ -23,9 +25,7 @@ class WorkerStats extends Component {
     };
   }
 
-  // purchases_by_category -- purchases_by_pay_method --- purchases_by_zone
   async componentDidMount() {
-    console.log(await this.fetchData("Categoria"));
     this.setState({
       data: {
         Mesero: await this.fetchData("Mesero"),
@@ -43,10 +43,10 @@ class WorkerStats extends Component {
     );
     const workers = await response.json();
     return Object.keys(workers).map((worker) => ({
-        name: worker,
-        quantity: workers[worker]["quantity"],
-        income: workers[worker]["income"],
-      }));
+      name: worker,
+      quantity: workers[worker]["quantity"],
+      income: workers[worker]["income"],
+    }));
   };
 
   switchTab = () => {
@@ -75,35 +75,41 @@ class WorkerStats extends Component {
   render() {
     const { quantityTab, filter, filterOptions, data } = this.state;
     return (
-      <div className={"a"}>
+      <div className={"general"}>
         <div className={"title"}>
-          <h1>Estadisticas {this.props.waiter ? "Meseros" : "Cajeros"}</h1>
+          <h1>Estadisticas Cantidad</h1>
         </div>
-        <Dropdown
-          options={filterOptions}
-          onChange={this.setFilter}
-          value={filter}
-          placeholder={filter ? "Escoge una categoría" : "Cargando..."}
-        />
+        <div className={style.filter}>
+          <Dropdown
+            options={filterOptions}
+            onChange={this.setFilter}
+            value={filter}
+            placeholder={filter ? "Escoge una categoría" : "Cargando..."}
+          />
+          <button className={style.button} onClick={this.switchTab}>
+            {quantityTab ? "Ver por ingresos" : "Ver por mesas"}
+          </button>
+        </div>
 
         <Paper>
-          <Chart data={filter ? data[filter] : []}>
-            <ArgumentAxis />
-            <ValueAxis max={7} />
+            <Chart data={filter ? data[filter] : []}>
+              <ArgumentAxis />
+              <ValueAxis max={7} />
 
-            <BarSeries
-              valueField={quantityTab ? "quantity" : "income"}
-              argumentField="name"
-            />
-            <Title
-              text={quantityTab ? "Cantidad de mesas" : "Valor total mesas"}
-            />
-            {/* <Animation />  Esto falla a veces por alguna razon :(*/}
-          </Chart>
+              <BarSeries
+                color={quantityTab ? "#3f51b5" : "#12bb48"}
+                valueField={quantityTab ? "quantity" : "income"}
+                argumentField="name"
+              />
+              <Title
+                text={
+                  quantityTab ? "Cantidad de mesas" : "Valor total de las mesas"
+                }
+              />
+              <EventTracker />
+              <Tooltip />
+            </Chart>
         </Paper>
-        <button onClick={this.switchTab}>
-          {quantityTab ? "Ver por ingresos" : "Ver por cantidad"}
-        </button>
       </div>
     );
   }
