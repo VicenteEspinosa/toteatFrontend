@@ -1,10 +1,10 @@
-import './App.css';
-import WaiterStats from './components/WaiterStats/WaiterStats';
+import "./App.css";
+import WorkerStats from "./components/WorkerStats/WorkerStats";
 
 function App() {
   return (
     <div className="App">
-      <WaiterStats />
+      <WorkerStats waiter={true} />
     </div>
   );
 }
