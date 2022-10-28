@@ -43,10 +43,10 @@ class WorkerStats extends Component {
     );
     const workers = await response.json();
     return Object.keys(workers).map((worker) => ({
-        name: worker,
-        quantity: workers[worker]["quantity"],
-        income: workers[worker]["income"],
-      }));
+      name: worker,
+      quantity: workers[worker]["quantity"],
+      income: workers[worker]["income"],
+    }));
   };
 
   switchTab = () => {
@@ -92,6 +92,7 @@ class WorkerStats extends Component {
             <ValueAxis max={7} />
 
             <BarSeries
+              color={quantityTab ? "#3f51b5" : "#12bb48"}
               valueField={quantityTab ? "quantity" : "income"}
               argumentField="name"
             />
